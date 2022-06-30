@@ -1,13 +1,29 @@
+import { Company, Matrix as MatrixType } from '../../types';
 import { AppContext } from '../../context/app/appContext';
-import { Company } from '../../types';
 
 import useContext from '../../hooks/useContext';
 import Toggle from '../layout/Toggle';
 import classNames from 'classnames';
 
-const Matrix = () => {
-  const { attributes, companies, relations, setRelation, removeRelation } =
+interface MatrixProps {
+  matrix?: MatrixType;
+}
+
+const Matrix = ({ matrix }: MatrixProps) => {
+  const { setRelation, removeRelation, ...appContext } =
     useContext(AppContext);
+
+  const attributes = !!matrix
+    ? matrix.data.attributes
+    : appContext.attributes;
+
+  const companies = !!matrix
+    ? matrix.data.companies
+    : appContext.companies;
+
+  const relations = !!matrix
+    ? matrix.data.relations
+    : appContext.relations;
 
   const maxImportance = attributes.reduce((prev, { importance }) => {
     return prev + importance; // Sum of all attribute importances...
@@ -21,6 +37,13 @@ const Matrix = () => {
     return checked
       ? setRelation({ attribute: attributeId, company: companyId })
       : removeRelation(attributeId, companyId);
+  };
+
+  const isChecked = (attributeId: string, companyId: string) => {
+    return relations.some(
+      ({ attribute, company }) =>
+        attribute === attributeId && company === companyId
+    );
   };
 
   const calculateCompanyFit = ({ id }: Company) => {
@@ -69,6 +92,8 @@ const Matrix = () => {
               {companies.map(({ id: companyId }) => (
                 <td className="px-6 py-4" key={companyId}>
                   <Toggle
+                    disabled={!!matrix}
+                    checked={isChecked(attributeId, companyId)}
                     onChange={(checked) => {
                       handleChange(checked, attributeId, companyId);
                     }}
@@ -86,7 +111,7 @@ const Matrix = () => {
             {companyFits.map((fit, id) => (
               <td
                 key={id}
-                className={classNames('py-4 px-6 transition-colors', {
+                className={classNames('py-4 px-6 w-32 transition-colors', {
                   'bg-slate-500 text-white font-semibold':
                     bestFit && fit === bestFit,
                 })}

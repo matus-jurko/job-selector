@@ -4,7 +4,7 @@ export enum ModalViews {
   THIRD_STEP = 'THIRD_STEP',
 }
 
-export type BaseStep = {
+export type Step = {
   title: string;
   description: string;
 };
@@ -23,4 +23,14 @@ export type Company = {
 export type AttributeToCompany = {
   attribute: string;
   company: string;
+};
+
+export type Matrix = {
+  id?: string;
+  name: string;
+  data: {
+    relations: AttributeToCompany[];
+    attributes: Attribute[];
+    companies: Company[];
+  };
 };

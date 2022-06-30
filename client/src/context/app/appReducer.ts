@@ -1,6 +1,22 @@
-import { Attribute, AttributeToCompany, Company } from '../../types';
+import {
+  Attribute,
+  AttributeToCompany,
+  Company,
+  Matrix,
+} from '../../types';
+
 import { AppState } from './appContext';
 import { AppTypes } from '../types';
+
+interface LoadMatrixAction {
+  type: AppTypes.LOAD_MATRIX;
+  payload: Matrix;
+}
+
+interface SaveMatrixAction {
+  type: AppTypes.SAVE_MATRIX;
+  payload: Matrix;
+}
 
 interface AddAttributeAction {
   type: AppTypes.ADD_ATTRIBUTE;
@@ -39,12 +55,19 @@ interface ClearRelationsAction {
   type: AppTypes.CLEAR_RELATIONS;
 }
 
+interface SetEditingId {
+  type: AppTypes.SET_EDITING_ID;
+  payload?: string;
+}
+
 interface SetNameAction {
   type: AppTypes.SET_NAME;
   payload: string;
 }
 
 type AppAction =
+  | LoadMatrixAction
+  | SaveMatrixAction
   | AddAttributeAction
   | RemoveAttributeAction
   | AddCompanyAction
@@ -52,6 +75,7 @@ type AppAction =
   | SetRelationAction
   | RemoveRelationAction
   | ClearRelationsAction
+  | SetEditingId
   | SetNameAction;
 
 export const appReducer = (
@@ -59,6 +83,19 @@ export const appReducer = (
   action: AppAction
 ): AppState => {
   switch (action.type) {
+    case AppTypes.LOAD_MATRIX:
+      return {
+        ...state,
+        name: action.payload.name,
+        attributes: action.payload.data.attributes,
+        companies: action.payload.data.companies,
+        relations: action.payload.data.relations,
+      };
+    case AppTypes.SAVE_MATRIX:
+      return {
+        ...state,
+        matrix: action.payload,
+      };
     case AppTypes.ADD_ATTRIBUTE:
       return {
         ...state,
@@ -101,6 +138,11 @@ export const appReducer = (
       return {
         ...state,
         relations: [],
+      };
+    case AppTypes.SET_EDITING_ID:
+      return {
+        ...state,
+        editingId: action.payload,
       };
     case AppTypes.SET_NAME:
       return {

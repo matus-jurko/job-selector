@@ -1,6 +1,6 @@
-import { BaseStep } from '../types';
+import { Step } from '../types';
 
-export const baseSteps: BaseStep[] = [
+export const baseSteps: Step[] = [
   {
     title: 'Pridajte parametre',
     description:

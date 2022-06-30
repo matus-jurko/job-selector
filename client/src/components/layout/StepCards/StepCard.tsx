@@ -1,10 +1,10 @@
 import { ComponentProps } from 'react';
 import { CheckIcon } from '@heroicons/react/solid';
-import { BaseStep } from '../../../types';
+import { Step } from '../../../types';
 import StepBadge from './StepBadge';
 import classNames from 'classnames';
 
-type StepCardProps = BaseStep &
+type StepCardProps = Step &
   ComponentProps<'li'> & {
     active?: boolean;
     disabled?: boolean;

@@ -19,9 +19,9 @@ interface NameFormProps {
 const NameForm = ({ className }: NameFormProps) => {
   const [value, setValue] = useState('');
 
+  const { setName, setEditingId } = useContext(AppContext);
   const { openModal } = useContext(ModalContext);
   const { setAlert } = useContext(AlertContext);
-  const { setName } = useContext(AppContext);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.currentTarget.value);
@@ -37,6 +37,7 @@ const NameForm = ({ className }: NameFormProps) => {
     }
 
     setName(name);
+    setEditingId(undefined); // Reset editing id...
     openModal(ModalViews.FIRST_STEP, baseSteps[0].title);
   };
 

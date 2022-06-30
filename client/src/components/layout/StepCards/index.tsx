@@ -1,11 +1,11 @@
 import { ComponentProps } from 'react';
-import { BaseStep } from '../../../types';
+import { Step } from '../../../types';
 import classNames from 'classnames';
 import StepCard from './StepCard';
 
 interface StepCardsProps extends ComponentProps<'div'> {
   currentStepIndex?: number;
-  steps: BaseStep[];
+  steps: Step[];
 }
 
 const StepCards = ({

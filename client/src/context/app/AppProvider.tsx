@@ -1,11 +1,19 @@
+import {
+  Attribute,
+  AttributeToCompany,
+  Company,
+  Matrix,
+} from '../../types';
+
 import { PropsWithChildren, useReducer } from 'react';
-import { Attribute, AttributeToCompany, Company } from '../../types';
 import { AppContext, AppState } from './appContext';
 import { appReducer } from './appReducer';
 import { AppTypes } from '../types';
 
 const AppProvider = ({ children }: PropsWithChildren<{}>) => {
   const initialState: AppState = {
+    editingId: undefined,
+    matrix: undefined,
     name: undefined,
     relations: [],
     attributes: [],
@@ -13,6 +21,14 @@ const AppProvider = ({ children }: PropsWithChildren<{}>) => {
   };
 
   const [state, dispatch] = useReducer(appReducer, initialState);
+
+  const loadMatrix = (matrix: Matrix) => {
+    dispatch({ type: AppTypes.LOAD_MATRIX, payload: matrix });
+  };
+
+  const saveMatrix = (matrix: Matrix) => {
+    dispatch({ type: AppTypes.SAVE_MATRIX, payload: matrix });
+  };
 
   const addAttribute = (attribute: Attribute) => {
     dispatch({ type: AppTypes.ADD_ATTRIBUTE, payload: attribute });
@@ -45,6 +61,10 @@ const AppProvider = ({ children }: PropsWithChildren<{}>) => {
     dispatch({ type: AppTypes.CLEAR_RELATIONS });
   };
 
+  const setEditingId = (id: string | undefined) => {
+    dispatch({ type: AppTypes.SET_EDITING_ID, payload: id });
+  };
+
   const setName = (name: string) => {
     dispatch({ type: AppTypes.SET_NAME, payload: name });
   };
@@ -52,6 +72,8 @@ const AppProvider = ({ children }: PropsWithChildren<{}>) => {
   return (
     <AppContext.Provider
       value={{
+        loadMatrix,
+        saveMatrix,
         addAttribute,
         removeAttribute,
         addCompany,
@@ -59,6 +81,7 @@ const AppProvider = ({ children }: PropsWithChildren<{}>) => {
         setRelation,
         removeRelation,
         clearRelations,
+        setEditingId,
         setName,
         ...state,
       }}
