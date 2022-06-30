@@ -1,0 +1,21 @@
+{
+  "name": "job-selector",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "start": "concurrently -k -p \"[{name}]\" -n \"Server,Client\" -c \"yellow.bold,cyan.bold\" \"yarn server\" \"yarn client\"",
+    "watch": "concurrently -k -p \"[{name}]\" -n \"Server,Client\" -c \"yellow.bold,cyan.bold\" \"yarn server:watch\" \"yarn client\"",
+    "client:build": "yarn workspace client build",
+    "client": "yarn workspace client start",
+    "server:watch": "yarn workspace server watch",
+    "server": "yarn workspace server start"
+  },
+  "devDependencies": {
+    "concurrently": "^7.2.1"
+  }
+}
