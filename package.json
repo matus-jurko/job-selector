@@ -12,6 +12,7 @@
     "watch": "concurrently -k -p \"[{name}]\" -n \"Server,Client\" -c \"yellow.bold,cyan.bold\" \"yarn server:watch\" \"yarn client\"",
     "client:build": "yarn workspace client build",
     "client": "yarn workspace client start",
+    "migrate:dev": "yarn workspace server prisma migrate dev",
     "server:watch": "yarn workspace server watch",
     "server": "yarn workspace server start"
   },
