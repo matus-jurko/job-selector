@@ -10,11 +10,13 @@
   "scripts": {
     "start": "concurrently -k -p \"[{name}]\" -n \"Server,Client\" -c \"yellow.bold,cyan.bold\" \"yarn server\" \"yarn client\"",
     "watch": "concurrently -k -p \"[{name}]\" -n \"Server,Client\" -c \"yellow.bold,cyan.bold\" \"yarn server:watch\" \"yarn client\"",
+    "": "",
     "client:build": "yarn workspace client build",
     "client": "yarn workspace client start",
-    "migrate:dev": "yarn workspace server prisma migrate dev",
+    "server:build": "yarn workspace server build",
+    "server:migrate": "yarn workspace server migrate",
     "server:watch": "yarn workspace server watch",
-    "server": "yarn workspace server start"
+    "server": "yarn server:build && yarn workspace server start"
   },
   "devDependencies": {
     "concurrently": "^7.2.1"

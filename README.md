@@ -31,7 +31,7 @@ yarn install
 **Step 4:** Migrate the database
 
 ```bash
-yarn run migrate:dev
+yarn run server:migrate
 ```
 
 **Step 5:** Start the application

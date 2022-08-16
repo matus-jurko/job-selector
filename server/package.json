@@ -4,12 +4,17 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "serve": "node build/server.js",
+    "start": "node build/server.js",
     "build": "tsc -p tsconfig.json",
-    "start": "yarn build && yarn serve",
+    "migrate": "yarn prisma migrate dev",
+    "heroku-postbuild": "yarn build && yarn migrate",
     "watch:ts": "tsc -p tsconfig.json -w",
     "watch:node": "nodemon --watch build build/server.js",
     "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"yarn watch:ts\" \"yarn watch:node\""
+  },
+  "engines": {
+    "node": "16.x",
+    "yarn": "1.x"
   },
   "dependencies": {
     "@prisma/client": "^4.0.0",
