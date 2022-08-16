@@ -16,6 +16,6 @@ export const api = (route: string): string => {
   route = route.replace(/^\//, '');
 
   return process.env.NODE_ENV === 'production'
-    ? `${process.env.API_DOMAIN}/${route} `
+    ? `${process.env.REACT_APP_API_DOMAIN}/${route} `
     : `http://localhost:8080/${route}`;
 };
